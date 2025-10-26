@@ -1,0 +1,6 @@
+@VulnerableToDoApp.API_HostAddress = http://localhost:5017
+
+GET {{VulnerableToDoApp.API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
