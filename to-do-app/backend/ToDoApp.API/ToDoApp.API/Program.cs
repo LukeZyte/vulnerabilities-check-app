@@ -1,5 +1,3 @@
-using Microsoft.Data.SqlClient;
-using System.Data;
 using ToDoApp.API.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +17,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

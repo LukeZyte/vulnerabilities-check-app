@@ -1,9 +1,9 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
-using ToDoApp.API.Repositories.Implementations;
-using ToDoApp.API.Repositories.Interfaces;
+using VulnerableToDoApp.API.Repositories.Implementations;
+using VulnerableToDoApp.API.Repositories.Interfaces;
 
-namespace ToDoApp.API.Extensions;
+namespace VulnerableToDoApp.API.Extensions;
 
 public static class ServiceCollectionExtension
 {
