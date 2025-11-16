@@ -1,6 +1,6 @@
-﻿using ToDoApp.API.Models.Domain;
+﻿using VulnerableToDoApp.API.Models.Domain;
 
-namespace ToDoApp.API.Repositories.Interfaces;
+namespace VulnerableToDoApp.API.Repositories.Interfaces;
 
 public interface ITasksRepository
 {

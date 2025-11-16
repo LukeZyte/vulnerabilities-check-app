@@ -1,4 +1,4 @@
-﻿namespace ToDoApp.API.Models.Domain;
+﻿namespace VulnerableToDoApp.API.Models.Domain;
 
 public class TaskItem
 {

@@ -1,6 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Data.SqlClient;
-using ToDoApp.API.Models.Domain;
+using VulnerableToDoApp.API.Models.Domain;
 
 public static class DatabaseInitializer
 {
@@ -77,10 +77,10 @@ public static class DatabaseInitializer
             BEGIN
                 CREATE TABLE Tasks (
                     Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
-                    Text NVARCHAR(MAX) NOT NULL,
+                    Title NVARCHAR(200) NOT NULL,
+                    Description NVARCHAR(MAX),
                     IsCompleted BIT DEFAULT 0 NOT NULL,
-                    CreatedAt DATETIME2 DEFAULT GETDATE() NOT NULL,
-                    OwnerId UNIQUEIDENTIFIER NOT NULL
+                    CreatedAt DATETIME2 DEFAULT GETDATE() NOT NULL
                 );
             END
         ");

@@ -1,9 +1,9 @@
 ﻿using Dapper;
 using System.Data;
-using ToDoApp.API.Models.Domain;
-using ToDoApp.API.Repositories.Interfaces;
+using VulnerableToDoApp.API.Models.Domain;
+using VulnerableToDoApp.API.Repositories.Interfaces;
 
-namespace ToDoApp.API.Repositories.Implementations;
+namespace VulnerableToDoApp.API.Repositories.Implementations;
 
 public class TasksRepository : ITasksRepository
 {
