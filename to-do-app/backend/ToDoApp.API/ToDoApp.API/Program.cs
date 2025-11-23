@@ -18,8 +18,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("SecureCors");
+
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

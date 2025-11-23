@@ -2,24 +2,26 @@ import { useEffect, useState } from "react";
 
 export function useAuth() {
   const [userId, setUserId] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem("userid");
-    if (stored) setUserId(stored);
+    setUserId(localStorage.getItem("userid"));
+    setToken(localStorage.getItem("token"));
   }, []);
 
-  const login = (userId: string, username: string) => {
-    localStorage.setItem("username", username.trim());
+  const login = (userId: string, token: string) => {
     localStorage.setItem("userid", userId);
-    console.log("setUserId", userId);
+    localStorage.setItem("token", token);
     setUserId(userId);
+    setToken(token);
   };
 
   const logout = () => {
-    localStorage.removeItem("username");
     localStorage.removeItem("userid");
+    localStorage.removeItem("token");
     setUserId(null);
+    setToken(null);
   };
 
-  return { userId, login, logout };
+  return { userId, token, login, logout };
 }

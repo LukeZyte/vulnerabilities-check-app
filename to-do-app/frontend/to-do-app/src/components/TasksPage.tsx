@@ -34,13 +34,17 @@ export default function TasksPage({ onLogout }: Props) {
   const [pageLoading, setPageLoading] = useState(true);
   const [addLoading, setAddLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const { userId } = useAuth();
+  const { userId, token } = useAuth();
 
   useEffect(() => {
-    if (!userId) return;
-
+    if (!userId || !token) return;
+  
     axios
-      .get(`${API_URL}/api/Tasks/owner/${userId}`)
+      .get(`${API_URL}/api/Tasks/owner/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         setTasks(response.data);
       })
@@ -51,11 +55,11 @@ export default function TasksPage({ onLogout }: Props) {
       .finally(() => {
         setPageLoading(false);
       });
-  }, [userId]);
+  }, [userId, token]);
 
   const addTask = () => {
     if (!task.trim()) return;
-
+    if (!token) return;
     setAddLoading(true);
 
     console.log({
@@ -64,19 +68,20 @@ export default function TasksPage({ onLogout }: Props) {
     });
 
     axios
-      .post(`${API_URL}/api/Tasks`, {
-        text: task.trim(),
-        ownerId: userId,
-      })
+      .post(
+        `${API_URL}/api/Tasks`,
+        { text: task.trim() },
+        { headers: { Authorization: `Bearer ${token}` }, }
+      )
       .then((response) => {
         const createdTaskId: string = response.data.taskId;
-
+      
         const newTask: Task = {
           id: createdTaskId,
           text: task.trim(),
           isCompleted: false,
         };
-
+      
         setTasks((prev) => [...prev, newTask]);
       })
       .catch((error) => {
@@ -90,20 +95,20 @@ export default function TasksPage({ onLogout }: Props) {
   };
 
   const deleteTask = (id: string) => {
+    if (!token) return;
     setDeleteLoading(true);
     axios
-      .delete(`${API_URL}/api/Tasks/${id}`)
-      .then((response) => {
-        console.log(response.data);
+      .delete(`${API_URL}/api/Tasks/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then(() => {
         setTasks((prev) => prev.filter((t) => t.id !== id));
       })
       .catch((error) => {
         console.error("Failed to delete task:", error);
         alert("Nie udało się usunąć zadania. Spróbuj ponownie.");
       })
-      .finally(() => {
-        setDeleteLoading(false);
-      });
+      .finally(() => setDeleteLoading(false));
   };
 
   if (pageLoading) {
