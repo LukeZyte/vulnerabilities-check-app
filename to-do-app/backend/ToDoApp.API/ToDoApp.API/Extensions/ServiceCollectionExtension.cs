@@ -1,7 +1,8 @@
-﻿using Microsoft.Data.SqlClient;
-using System.Data;
+﻿using System.Data;
+using Microsoft.Data.SqlClient;
 using ToDoApp.API.Repositories.Implementations;
 using ToDoApp.API.Repositories.Interfaces;
+using ToDoApp.API.Services;
 
 namespace ToDoApp.API.Extensions;
 
@@ -11,6 +12,8 @@ public static class ServiceCollectionExtension
     {
         services.AddScoped<ITasksRepository, TasksRepository>();
         services.AddScoped<IUsersRepository, UsersRepository>();
+        services.AddScoped<IJwtService, JwtService>();
+
 
         return services;
     }
@@ -24,12 +27,13 @@ public static class ServiceCollectionExtension
 
         services.AddCors(options =>
         {
-            options.AddPolicy("AllowAll", policy =>
+            options.AddPolicy("SecureCors", policy =>
             {
                 policy
-                    .AllowAnyOrigin()
+                    .WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowAnyHeader();
+                    .AllowCredentials();
             });
         });
 

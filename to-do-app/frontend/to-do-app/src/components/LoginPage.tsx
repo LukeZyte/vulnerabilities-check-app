@@ -45,12 +45,17 @@ export default function LoginPage({ onLogin }: Props) {
     setLoading(true);
 
     axios
-      .get(`${API_URL}/api/Auth/login`, {
-        params: { username, password },
+      .post(`${API_URL}/api/Auth/login`, {
+        username,
+        password
       })
       .then((response) => {
-        onLogin(response.data, username.trim());
-        console.log("Login successful:", response.data);
+        const token = response.data.token;
+        localStorage.setItem("token", token);
+            
+        onLogin(username.trim(), token);
+            
+        console.log("Login successful:", token);
       })
       .catch((error) => {
         console.error("Login failed:", error);
