@@ -23,7 +23,7 @@ public class TasksController : ControllerBase
     [Route("{taskId:Guid}")]
     public async Task<IActionResult> GetByIdAsync([FromRoute] Guid taskId)
     {
-        var userId = User.FindFirstValue("sub");
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
         var task = await _tasksRepository.GetByIdAsync(taskId);
@@ -35,10 +35,9 @@ public class TasksController : ControllerBase
     }
 
     [HttpGet]
-    [Authorize(Roles = "Admin")]
     public async Task<IActionResult> GetAllAsync()
     {
-        var userId = User.FindFirstValue("sub");
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
         var tasks = await _tasksRepository.GetAllByOwnerIdAsync(Guid.Parse(userId));
@@ -49,7 +48,7 @@ public class TasksController : ControllerBase
     [Route("owner/{ownerId:Guid}")]
     public async Task<IActionResult> GetAllByOwnerIdAsync([FromRoute] Guid ownerId)
     {
-        var userId = User.FindFirstValue("sub");
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (string.IsNullOrEmpty(userId)) return Unauthorized();
 
         var tasks = await _tasksRepository.GetAllByOwnerIdAsync(Guid.Parse(userId));
@@ -59,7 +58,7 @@ public class TasksController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] CreateTaskRequest request)
     {
-        var userId = User.FindFirstValue("sub");
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (string.IsNullOrEmpty(userId))
         {
             return Unauthorized();
@@ -79,7 +78,7 @@ public class TasksController : ControllerBase
     [Route("{taskId:Guid}")]
     public async Task<IActionResult> DeleteAsync([FromRoute] Guid taskId)
     {
-        var userId = User.FindFirstValue("sub");
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (userId == null) return Unauthorized();
 
         var task = await _tasksRepository.GetByIdAsync(taskId);

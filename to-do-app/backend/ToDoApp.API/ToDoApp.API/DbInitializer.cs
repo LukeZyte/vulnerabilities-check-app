@@ -10,7 +10,7 @@ public static class DatabaseInitializer
         {
             InitializeDatabase(connectionString);
             InitializeTables(connectionString);
-            //SeedTables(connectionString); // USE IT ONLY ONE TIME ON FIRST RUN
+            SeedTables(connectionString); // USE IT ONLY ONE TIME ON FIRST RUN
         }
         catch (Exception ex)
         {
@@ -25,7 +25,7 @@ public static class DatabaseInitializer
 
         var usersToInsert = new List<User>
         {
-            new User { Id = Guid.NewGuid(), Username = "Bob", Password = "$testBob" },
+            new User { Id = Guid.NewGuid(), Username = "A", Password = "Bardzo" },
         };
 
         string sql = "INSERT INTO Users (Id, Username, Password) VALUES (@Id, @Username, @Password);";

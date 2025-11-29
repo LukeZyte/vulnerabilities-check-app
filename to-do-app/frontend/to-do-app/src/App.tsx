@@ -12,10 +12,12 @@ function App() {
     if (userId) setLoggedIn(true);
   }, [userId]);
 
-  const handleLogin = (userId: string, username: string) => {
-    login(userId, username);
+const handleLogin = (userId: string, username: string, token: string) => {
+    login(userId, token); 
+    
+    localStorage.setItem("username", username);
     setLoggedIn(true);
-  };
+};
 
   const handleLogout = () => {
     logout();
