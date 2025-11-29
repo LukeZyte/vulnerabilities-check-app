@@ -37,7 +37,8 @@ namespace ToDoApp.API.Controllers
 
             return Ok(new
             {
-                token
+                token = token,
+                userId = user.Id.ToString()
             });
         }
     }

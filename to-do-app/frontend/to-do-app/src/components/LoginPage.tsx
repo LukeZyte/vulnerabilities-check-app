@@ -16,7 +16,7 @@ import { API_URL } from "../consts/local.consts";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 type Props = {
-  onLogin: (suerId: string, username: string) => void;
+  onLogin: (userId: string, username: string, token: string) => void;
 };
 
 export default function LoginPage({ onLogin }: Props) {
@@ -47,15 +47,22 @@ export default function LoginPage({ onLogin }: Props) {
     axios
       .post(`${API_URL}/api/Auth/login`, {
         username,
-        password
+        password,
       })
       .then((response) => {
         const token = response.data.token;
+        
+        const userId = response.data.userId; 
+
+        if (!userId) {
+            console.error("Backend nie zwrócił userId!");
+        }
+
         localStorage.setItem("token", token);
-            
-        onLogin(username.trim(), token);
-            
-        console.log("Login successful:", token);
+        
+        onLogin(userId, username.trim(), token);
+
+        console.log("Login successful. Token:", token, "UserID:", userId);
       })
       .catch((error) => {
         console.error("Login failed:", error);
